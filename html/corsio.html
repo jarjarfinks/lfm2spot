@@ -1,0 +1,207 @@
+<html>
+
+  <head>
+
+    <title>Joshua Finks | Last.fm Tools</title>
+    <!-- Import Google's Material Design Script for Display -->
+	<link rel="stylesheet" type="text/css" href="../../css/css.css"/>
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+	<script src="../../js/corsio.js"></script>
+</head>
+
+  <body>
+	
+  
+    <!-- Header Layout with Tabs -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+            mdl-layout--fixed-tabs">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">Last.fm to Spotify Tools</span>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <!-- Playlist Generator Tab -->
+          <a href="#playlist-create" class="mdl-layout__tab is-active">Playlist Creator</a>
+		  <a href="#playlist-artist-tab" class="mdl-layout__tab">Artist Playlist Creator</a>
+          <!-- Spotify Player Tab -->
+          <!-- <a href="#player-tab" class="mdl-layout__tab">Player</a> -->
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <!-- Description Drawer --><span class="mdl-layout-title">About This Tool</span>
+        <p>This website is a project I took up to make tools to bridge the gap of mobile Spotify and Last.fm. It was created to make it easy to keep an ongoing Spotify Playlist for the purpose of psuedo-mobile Last.fm radio.</p>
+        <br/>
+        <p>I found that the existing Last.fm Radio was lacking. Since 2014, Last.fm has removed mobile radio. It is one of the main reasons many Last.fm users had been willing to subscribe for the measly payment of $3/month. Unfortunately, they removed it,
+          replaced it with YouTube, then replaced it with a "new" user interface with Spotify and YouTube. The "new" Last.fm has changed many times, having varying iterations, all lacking the ability to really be used on a mobile device.</p>
+        <br/>
+        <p>As an avid Last.fm user, I had noticed there were tons of "workarounds" that could be done. Most of these involved exporting scrobbles in the hope you'd end up with similar recommendations on Spotify. These were often very involved and required
+          at least some coding experience.</p>
+        <br/>
+        <p>So, I started working on a tool to take input from your <i>ever</i> changing Last.fm library and generate an always changing Spotify playlist generator.</p>
+        <br/>
+        <p>This is what I came up with</p>
+        <br/>
+        <p>Sincerely,
+          <br/>Joshua Finks</p>
+      </div>
+      <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="playlist-create">
+          <div class="page-content">
+            <div>
+              <h2>
+
+Spotify Playlist Generator
+
+</h2>
+
+
+              <!-- Username Textfield -->
+              <h3>Application Overloaded? Try <a href="corsme.html">this alternative</a> page</h3>
+			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="username">
+                <label class="mdl-textfield__label" for="username">Last.fm Username</label>
+                <div class="mdl-tooltip" for="username">
+                  Type your Last.fm Username here
+                </div>
+              </div>
+			  
+
+
+              <br/>
+              <!-- Results display -->
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" id="result" name="result"></textarea>
+                  <label class="mdl-textfield__label" for="result">Radio Results</label>
+                </div>
+              </div>
+              <div class="mdl-tooltip" for="result">
+                When you press a button below, the corrosponding playlist is generated here
+              </div>
+              <br/>
+              <!-- Copy Playlist Button -->
+
+			  <button class="mdl-button mdl-js-button mdl-button--primary" onClick="copyResults();" id="copy-button" data-clipboard-target="#result">Copy&nbsp<i class="material-icons">&#xE14F;</i></button>
+              <div class="mdl-tooltip" for="copy-button">
+                Copy and Paste these results into the Spotify Desktop application to make a Playlist
+              </div>
+			  <br/>
+              <!-- Recommended Radio Button -->
+
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="radiorecs" onclick="getRadio('/recommended');">
+                Recommended Radio
+              </button>
+
+              <div class="mdl-tooltip" for="radiorecs">
+                Generate a Last.fm Recommendation
+                <br>Playlist for Spotify
+              </div>&nbsp&nbsp
+<br/><br/>
+              <!-- Mix Radio Button -->
+
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="radiomix" onclick="getRadio('/mix');">
+                Mix Radio
+              </button>
+
+              <div class="mdl-tooltip" for="radiomix">
+                Generate a Playlist with a Mix of Your Library and Recommendations
+                <br>for Spotify
+              </div>
+              &nbsp&nbsp
+<br/>
+              <!-- Library Radio Button -->
+
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="radiolib" onclick="getRadio('/library');">
+                Library</button>
+              <div class="mdl-tooltip" for="radiolib">
+                Generate a Playlist of Your
+                <br>Library for Spotify
+              </div>
+
+				
+            </div>
+
+        </section>
+        <!-- Spotify Player Tab-->
+<section class="mdl-layout__tab-panel" id="playlist-artist-tab">
+          <div class="page-content">
+            <h2>Spotify Similar Artist Playlist Generator
+    </h2><h3>Application Overloaded? Try <a href="corsme.html">this alternative</a> page</h3>
+	<!-- Artist Textfield -->
+			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="artist">
+                <label class="mdl-textfield__label" for="artist">Artist</label>
+                <div class="mdl-tooltip" for="artist">
+                  Type an Artist here
+                </div>
+              </div>
+			  <br/>
+			  <!-- Results display -->
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" id="artistResult"></textarea>
+                  <label class="mdl-textfield__label" for="artistResult">Radio Results</label>
+                </div>
+              </div>
+              <div class="mdl-tooltip" for="artistResult">
+                When you press the button below, the corrosponding playlist is generated here
+              </div>
+              <br/>
+			  <button class="mdl-button mdl-js-button mdl-button--primary" onClick="copyArtistResults();" id="artist-copy-button">Copy&nbsp<i class="material-icons">&#xE14F;</i></button>
+              <div class="mdl-tooltip" for="artist-copy-button">
+                Copy and Paste these results into the Spotify Desktop application to make a Playlist
+              </div>
+	<!-- Artist Button -->
+			  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="artistRadio" href="javascript:void(0);" onclick="getSimilarArtist(artist.value);">Artist</button>
+              <div class="mdl-tooltip" for="artistRadio">
+                Generate a Playlist of music
+                <br>similar to an Artist for Spotify
+              </div>
+
+          </div>
+
+        </section>
+        <!--<section class="mdl-layout__tab-panel" id="player-tab">
+          <div class="page-content">
+            <h2>
+      Spotify Player<br/><iframe src="" id="spotifyPlayer" frameborder = "0" allowtransparency = "true" width="640"></iframe><div class="mdl-tooltip" for="spotifyPlayer">
+Play your generated playlist
+</div>
+    </h2>
+
+          </div>
+
+        </section>
+		-->
+
+      </main>
+      <!-- Footer -->
+
+      <footer class="mdl-mini-footer">
+
+        <div class="mdl-mini-footer__left-section">
+
+          <div class="mdl-logo"><i class="material-icons">&#xE90C;</i> 2016 Joshua Finks</div>
+
+        </div>
+
+      </footer>
+
+      </div>
+	  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72932305-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+  <html>
